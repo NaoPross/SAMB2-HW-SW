@@ -5,6 +5,7 @@
 \usepackage[european, siunitx]{circuitikz}
 \usepackage{floatrow}
 \usepackage{mathtools}
+\usepackage{cancel}
 \usepackage{graphicx}
 \usepackage{hyperref}
 
@@ -83,26 +84,27 @@
 	\section{Sensore}
 	La tensione misurata in $V_t$ é la tensione che cade sul diodo Zener LM335z, questo
 	sensore é configurato per funzionare da $\SI{-40}{\celsius}$ a $\SI{+100}{\celsius}$.
-	Dal datasheet é dato che a $\SI{+25}{\celsius}$ ha una tensione di $\SI{2,98}{\volt}$,
-	da questo valore si può intuire che la tensione equivale a un decimo della temperatura
-	in gradi Kelvin.
-	$$10 * V_t = T_K$$
-	$$\SI{100}{\celsius} = \SI{373}{\kelvin} = \SI{3.73}{\volt}$$
+	Nel datasheet é dato che a $\SI{+25}{\celsius}$ ha una tensione di $\SI{2,98}{\volt}$,
+	da questo possiamo trovare attraverso una proporzione, come convertire la tensione in
+	temperatura.\\
+	(Nota: Nel calcolo i \SI{25}{\celsius} vengono convertiti in Kelvin)
+	\begin{align*}
+		\frac{V_t}{\SI{2.98}{\volt}} &= \frac{T_K}{\SI{25}{\celsius}}\\
+		T_K &= \frac{\cancel{\SI{298}{\kelvin}}}{\cancel{\SI{2.98}{\volt}}}*V_t\\
+		\implies T_k &= 10*V_t
+	\end{align*}
 	L'Arduino però legge un valore analogico come un numero intero da $0$ a $1023$, quindi per
 	convertire il valore di nuovo in Volts é necessario sapere a quanto corrisponde un unità
 	della misura del pin di Arduino. Dalle formule precedenti possiamo trarre una proporzione
 	tra le due grandezze e quindi estrarre $V_t$.
-	$$\frac{M_{A0}}{1024} = \frac{V_t}{\SI{3.73}{\volt}} \implies V_t = \frac{M_{A0} * 3.73}{1024}
-	~con~0\leq M_{A0} \leq 1023$$
-	Successivamente per convertire la tensione in gradi Celsius, prima convertiamo in gradi Kelvin
-	e in seguito sottraiamo \SI{273}{\celsius}. 
-	\begin{align*}
-		10 * V_t &= T_{\si{\celsius}} + \SI{273}{\celsius}\\
-		T_{\si{\celsius}} &= 10 * V_t - \SI{273}{\celsius}\\
-		T_{\si{\celsius}} &= 10 * \frac{M_{A0} * 3.73}{1024} - \SI{273}{\celsius}\\
-		\implies T_{\si{\celsius}} &= \frac{37.3*M_{A0}}{1024} - \SI{273}{\celsius}
-	\end{align*}
-	
+	$$\frac{M_{A0}}{1024} = \frac{V_t}{V_{max}} \implies V_t = \frac{M_{A0} * V_{max}}{1024} ~con~0\leq M_{A0} \leq 1023$$
+	$V_{max}$ può essere calcolato semplicemente attraverso la proporzione precedente, quindi
+	$$V_{max} = \frac{1}{10}*T_K \implies V_{max} = \frac{\SI{373}{\kelvin}}{10} = \SI{37.3}{\kelvin}$$
+	Utilizzando questo metodo creiamo una scala, e dato che la una unità in gradi Kelvin equivale a una nei
+	gradi Celsius con il calcolo possiamo ottenere direttamente una temperatra in \si{\celsius}.
+	$$V_t = \frac{\SI{37.3}{\kelvin}}{1024} * M_{A0}$$
+	$$T_{\si{\celsius}} = 10 * V_t$$
+
 	%SOFTWARE
 	\section{Software}
 	\subsection{Rappresentazione}
