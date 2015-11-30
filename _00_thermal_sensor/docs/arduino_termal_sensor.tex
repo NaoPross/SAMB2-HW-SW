@@ -5,7 +5,6 @@
 \usepackage[european, siunitx]{circuitikz}
 \usepackage{floatrow}
 \usepackage{mathtools}
-\usepackage{cancel}
 \usepackage{graphicx}
 \usepackage{hyperref}
 
@@ -90,7 +89,7 @@
 	(Nota: Nel calcolo i \SI{25}{\celsius} vengono convertiti in Kelvin)
 	\begin{align*}
 		\frac{V_t}{\SI{2.98}{\volt}} &= \frac{T_K}{\SI{25}{\celsius}}\\
-		T_K &= \frac{\cancel{\SI{298}{\kelvin}}}{\cancel{\SI{2.98}{\volt}}}*V_t\\
+		T_K &= \frac{\SI{298}{\kelvin}}{\SI{2.98}{\volt}}*V_t\\
 		\implies T_k &= 10*V_t
 	\end{align*}
 	L'Arduino però legge un valore analogico come un numero intero da $0$ a $1023$, quindi per
