@@ -29,13 +29,9 @@
 #define TEMP_MAGNIFY_BTN 5
 #define TEMP_MAGNIFY_COEFFICENT 25			// 25% which is 4 times more sensible
 
-int red, blue, green, scale;				// variables from `set_led_rbg()
-int raw_temp, magnify;						// i/o read variables
-bool magnifying;							// magnify mode on/off
-float volts_temp, deg_temp, ref_deg_temp;	// temperature calculation
+float ref_deg_temp;
 
 void set_led_rgb(float);					// rgb control
-void set_led_rgb(float, int); 				// optional argument
 void serial_log();							// log to serial monitor
 
 void setup()
@@ -52,25 +48,16 @@ void setup()
 
 void loop()
 {
-	raw_temp = analogRead(TEMP_SENSOR);
-	magnify = digitalRead(TEMP_MAGNIFY_BTN);
+	int raw_temp = analogRead(TEMP_SENSOR);
+	int magnify = digitalRead(TEMP_MAGNIFY_BTN);
 
-	/* NOTE
-	 * 373K  = 100°C
-	 * 3.73v = lm355z Max Temperature Value
-	 */
-	volts_temp = 3.73 / 1024 * raw_temp;
-	deg_temp = volts_temp * 10;
+	float deg_temp = 37.3 / 1024 * raw_temp;
 
 	if (magnify == HIGH) {					// magnifying mode button ON/OFF
-		if (magnifying == false) {
-			magnifying = true;
-			ref_deg_temp = deg_temp; 		// setting up the reference value
-		}
+		ref_deg_temp = deg_temp; 			// setting up the reference value
 		set_led_rgb(ref_deg_temp);
 	}
 	else {
-		magnifying = false;
 		ref_deg_temp = 0;					// reset the temperature value
 		set_led_rgb(0);
 	}
@@ -79,27 +66,19 @@ void loop()
 	delay(250);
 }
 
-void set_led_rgb(float ref) {
-	if (ref == 0) {
-		scale = 100;
-	}
-	else {
-		scale = 100 / TEMP_MAGNIFY_COEFFICENT;
-	}
-	set_led_rgb(ref, scale);
-}
-
-void set_led_rgb(float ref, int scale)
+void set_led_rgb(float ref_v)
 {
+	int red, green, blue;
+
 	// if the temperature is positive
-	if (deg_temp > ref) {
+	if (deg_temp > ref_v) {
 		blue = green = 0;
 		red = (deg_temp - ref) / scale * 255;
 	}
 	// it the temperature is negative
-	else if (deg_temp < ref) {
+	else if (deg_temp < ref_v) {
 		red = green = 0;
-		blue = (deg_temp + ref) / scale * 255;
+		blue = (deg_temp + ref_v) / scale * 255;
 	}
 	// it the temperature is exactly 0°C
 	else {
@@ -121,8 +100,6 @@ void serial_log()
 {
 	Serial.print("raw<");
 	Serial.print(raw_temp);
-	Serial.print("> volts<");
-	Serial.print(volts_temp);
 	Serial.print("> deg<");
 	Serial.print(deg_temp);
 	Serial.print("> magnify<");
