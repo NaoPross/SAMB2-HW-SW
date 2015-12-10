@@ -18,7 +18,7 @@
 #define PIN_BTN_SHIFT 6
 #define PIN_SPEAKER 7
 
-const int keyboard_lenght = 4;
+const int keyboard_lenght = PIN_BTN_END +1 - PIN_BTN_START;
 const int frequencies[] = {
 	262, 		// C4	Do
 	294,		// D4	Re
