@@ -17,6 +17,7 @@
 #define PIN_BTN_END 5
 #define PIN_BTN_SHIFT 6
 #define PIN_SPEAKER 7
+#define SLEEP_TIME 75
 
 const int keyboard_lenght = PIN_BTN_END +1 - PIN_BTN_START;
 const int frequencies[] = {
@@ -79,7 +80,7 @@ void loop()
 	}
 
 	Serial.println("-----------------------------");
-	delay(175);
+	delay(SLEEP_TIME);
 }
 
 void log_array(int arr[], char* title, int size)
