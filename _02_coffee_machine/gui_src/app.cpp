@@ -16,10 +16,10 @@
  * ARDUINO SERIAL COMUNICATION CLASS DEFINITION
  **************************************************/
 
-class Arduino
+class ArduinoSerial
 {
 public:
-	Arduino();
+	ArduinoSerial();
 	
 	int open();
 	void close();
@@ -31,12 +31,12 @@ private:
 	SerialPort serial;
 }
 
-Arduino::Arduino()
+ArduinoSerial::ArduinoSerial()
 {
 	serial(ARDUINO_SERIAL_PORT);
 }
 
-int Arduino::open()
+int ArduinoSerial::open()
 {
 	// 0 is clean exit state
 	int state = 0;
@@ -55,12 +55,12 @@ int Arduino::open()
 	return state;
 }
 
-void Arduino::close()
+void ArduinoSerial::close()
 {
 	serial.Close();
 }
 
-DataBuffer Arduino::read()
+DataBuffer ArduinoSerial::read()
 {
 	SerialPort::DataBuffer buff;
 	serial.Read(buff, 10, 1000);
@@ -68,7 +68,7 @@ DataBuffer Arduino::read()
 	return buff;
 }
 
-void Arduino::write(string msg)
+void ArduinoSerial::write(string msg)
 {
 	serial.write(msg.c_str(), msg.lenght());
 }
