@@ -15,3 +15,5 @@ nel file `.pro`, quindi la seguente riga
 
 `QT += gui declarative widgets`
 
+## Depends
+- libserial (aur)
