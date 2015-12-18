@@ -1,9 +1,5 @@
-// QtLibs
 #include <QApplication>
-#include <QWidget>
-
-#include <iostream>
-#include <string>
+#include "coffee_ui.hpp"
 
 /**************************************************
  * MAIN PROGRAM
@@ -11,12 +7,13 @@
 
 int main(int argc, char* argv[])
 {
-	QApplication application(argc, argv);
-	QWidget window;
+	QApplication app(argc, argv);
+
+	CoffeeUi window;
 
 	window.resize(250, 150);
 	window.setWindowTitle("Coffee Machine");
 	window.show();
 
-	return application.exec();
+	return app.exec();
 }
