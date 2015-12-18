@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root xmlns:nsd="http://structorizer.fisch.lu/" text="&#34;THERMAL_SENSOR&#34;" comment="&#34;&#34;" color="ffffff" type="program" style="nice">
+	<children>
+		<instruction text="&#34;RAW_TEMP := analog value from TEMP_SENSOR&#34;,&#34;MAGNIFY := digital value from TEMP_MAGNIFY_BTN&#34;" comment="" color="ffffff" rotated="0"></instruction>
+		<instruction text="&#34;MAGNIFYING := false&#34;,&#34;REF_DEG_TEMP := 0&#34;" comment="" color="ffffff" rotated="0"></instruction>
+		<instruction text="&#34;VOLTS_TEMP := 3.73 / 1024 * RAW_TEMP&#34;,&#34;DEG_TEMP := VOLTS_TEMP * 10&#34;" comment="" color="ffffff" rotated="0"></instruction>
+		<alternative text="&#34;MAGNIFY = HIGH&#34;" comment="" color="ffffff">
+			<qTrue>
+				<alternative text="&#34;MAGNIFYING = false&#34;" comment="" color="ffffff">
+					<qTrue>
+						<instruction text="&#34;MAGNIFYING := true&#34;,&#34;REF_DEG_TEMP := DEG_TEMP&#34;" comment="" color="ffffff" rotated="0"></instruction>
+					</qTrue>
+					<qFalse>
+						<instruction text="" comment="" color="ffffff" rotated="0"></instruction>
+					</qFalse>
+				</alternative>
+				<instruction text="&#34;SET_LED_RGB(0)&#34;" comment="" color="ffffff" rotated="0"></instruction>
+			</qTrue>
+			<qFalse>
+				<instruction text="&#34;MAGNIFYING := false&#34;,&#34;REF_DEG_TEMP := DEG_TEMP&#34;,&#34;&#34;,&#34;SET_LED_RGB(REF_DEG_TEMP)&#34;" comment="" color="ffffff" rotated="0"></instruction>
+			</qFalse>
+		</alternative>
+		<instruction text="&#34;wait 250 ms&#34;" comment="" color="ffffff" rotated="0"></instruction>
+	</children>
+</root>
