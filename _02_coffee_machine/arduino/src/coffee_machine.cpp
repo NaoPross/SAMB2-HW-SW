@@ -43,14 +43,14 @@ void blink(int, int, int);
 
 void setup() {
 #ifdef DEBUG
-	Serial.begin(9600);
+    Serial.begin(9600);
 #endif
 
     DDRC = 0x0E;                // Set INPUT and OUTPUT Pins
     PORTC = PINC & 0xF6;        // Turn on LED RED
 
     prev_status = 0x00;
-	credit = 0;
+    credit = 0;
 }
 
 void loop() {
