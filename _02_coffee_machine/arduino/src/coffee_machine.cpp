@@ -36,10 +36,10 @@
 
 #define DEBUG
 
-#define 10CTS 0b00010000
-#define 20CTS 0b00100000
-#define 50CTS 0b01000000
-#define 1CHF  0b10000000
+#define CTS10 0b00010000
+#define CTS20 0b00100000
+#define CTS50 0b01000000
+#define CHF1  0b10000000
 
 #define BUY_COFFEE 0b00000001
 #define LED_SET_RED 0xF6
@@ -85,10 +85,10 @@ void loop() {
             }
         }
         else {
-            credit += (input_status & 10CTS == 10CTS) ? 10 : 0;
-            credit += (input_status & 20CTS == 20CTS) ? 20 : 0;
-            credit += (input_status & 50CTS == 50CTS) ? 50 : 0;
-            credit += (input_status & 1CHF == 1CHF) ? 100 : 0;
+            credit += (input_status & CTS10 == CTS10) ? 10 : 0;
+            credit += (input_status & CTS20 == CTS20) ? 20 : 0;
+            credit += (input_status & CTS50 == CTS50) ? 50 : 0;
+            credit += (input_status & CHF1 == CHF1) ? 100 : 0;
         }
         
         if (credit >= COFFEE_PRICE) {
