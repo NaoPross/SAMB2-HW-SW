@@ -16,8 +16,13 @@
 	
 	\section{Elettronica}
 		\begin{figure}[h] \centering \begin{circuitikz}
-			\draw 	(0, 2)		to[voltage source, v=$\SI{5}{\volt}$]			(0, 0)
-					(0, 2)		to[short]											(2, 2);
-		
-		\end{circuitikz} \end{figure}
+			\draw 	(0, 1)		to[voltage source, v=$\SI{5}{\volt}$]			(0, -1)
+					(0, 2)		to[short]											(0, 1)
+					(0, 2)		to[short]											(2, 2)
+					(2, 2)		to[push button, l=$+10cts$, -*]					(2, 0)
+					(2, 0)		to[R=$\SI{330}{\ohm}$]							(2, -2)
+					(2, -2)		to[short]											(0, -2)
+					(0, -2)		to[short]											(0, -1);
+										
+		\end{circuitikz}\end{figure}
 \end{document}

@@ -34,8 +34,18 @@
 
 #include <Arduino.h>
 
-#define COFFEE_PRICE 130
+#define DEBUG
 
+#define 10CTS 0b00010000
+#define 20CTS 0b00100000
+#define 50CTS 0b01000000
+#define 1CHF  0b10000000
+
+#define BUY_COFFEE 0b00000001
+#define LED_SET_RED 0xF6
+#define LED_SET_GREEN 0xFA
+#define LED_SET_BLUE 0xFC
+#define COFFEE_PRICE 130
 
 int credit, prev_status;
 
@@ -47,10 +57,9 @@ void setup() {
 #endif
 
     DDRC = 0x0E;                // Set INPUT and OUTPUT Pins
-    PORTC = PINC & 0xF6;        // Turn on LED RED
+    blink(LED_SET_RED, 1, 5);
 
-    prev_status = 0x00;
-    credit = 0;
+    prev_status = credit = 0;
 }
 
 void loop() {
@@ -64,36 +73,29 @@ void loop() {
     Serial.println(credit);
 #endif
 
+    // if something has changed
     if (input_status != prev_status) {
-        switch(input_status) {
-        case 0x10:
-            credit += 10;
-            break;
-        case 0x20:
-            credit += 20;
-            break;
-        case 0x40:
-            credit += 50;
-            break;
-        case 0x80:
-            credit += 100; 
-            break;
-        case 0x01:
+        if (input_status & BUY_COFFEE == BUY_COFFEE) {
             if (credit >= COFFEE_PRICE) {
-                blink(0xFA, 4, 250);
+                blink(LED_SET_BLUE, 4, 250);
                 credit -= COFFEE_PRICE;
             }
             else {
-                blink(0xF6, 4, 250);
+                blink(LED_SET_RED, 4, 250);
             }
-            break;
+        }
+        else {
+            credit += (input_status & 10CTS == 10CTS) ? 10 : 0;
+            credit += (input_status & 20CTS == 20CTS) ? 20 : 0;
+            credit += (input_status & 50CTS == 50CTS) ? 50 : 0;
+            credit += (input_status & 1CHF == 1CHF) ? 100 : 0;
         }
         
         if (credit >= COFFEE_PRICE) {
-            blink(0xFC, 1, 5); 
+            blink(LED_SET_GREEN, 1, 5); 
         }
         else {
-            blink(0xF6, 1, 5);
+            blink(LED_SET_RED, 1, 5);
         }
     } 
 

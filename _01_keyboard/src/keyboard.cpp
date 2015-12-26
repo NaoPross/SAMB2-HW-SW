@@ -21,14 +21,14 @@
 
 const int keyboard_lenght = PIN_BTN_END +1 - PIN_BTN_START;
 const int frequencies[] = {
-	262, 		// C4	Do
-	294,		// D4	Re
-	330,		// E4	Mi
-	349,		// F4	Fa
-	392,		// G4	Sol
-	440,		// A4	La
-	494,		// B4	Si
-	523			// C5	Do
+    262,        // C4   Do
+    294,        // D4   Re
+    330,        // E4   Mi
+    349,        // F4   Fa
+    392,        // G4   Sol
+    440,        // A4   La
+    494,        // B4   Si
+    523         // C5   Do
 };
 
 int i, keyb_prev_state[] = {0, 0, 0, 0}; 
@@ -40,81 +40,81 @@ void copy_array(int*, int*, int);
 
 void setup()
 {
-	Serial.begin(9600);
-	
-	for (i = PIN_BTN_START; i <= PIN_BTN_END; i++) {
-		pinMode(i, INPUT);
-	}
-	pinMode(PIN_BTN_SHIFT, INPUT);
-	pinMode(PIN_SPEAKER, OUTPUT);
+    Serial.begin(9600);
+    
+    for (i = PIN_BTN_START; i <= PIN_BTN_END; i++) {
+        pinMode(i, INPUT);
+    }
+    pinMode(PIN_BTN_SHIFT, INPUT);
+    pinMode(PIN_SPEAKER, OUTPUT);
 }
 
 void loop()
 {
-	int shift_state = digitalRead(PIN_BTN_SHIFT);
-	int keyb_state[keyboard_lenght];
+    int shift_state = digitalRead(PIN_BTN_SHIFT);
+    int keyb_state[keyboard_lenght];
 
-	// Read every value and stores it into the array
-	for (i = PIN_BTN_START; i <= PIN_BTN_END; i++) {
-		keyb_state[i - PIN_BTN_START] = digitalRead(i);
-	}
+    // Read every value and stores it into the array
+    for (i = PIN_BTN_START; i <= PIN_BTN_END; i++) {
+        keyb_state[i - PIN_BTN_START] = digitalRead(i);
+    }
 
-	log_array(keyb_state, "keyb_state", keyboard_lenght);
-	log_array(keyb_prev_state, "prev_state", keyboard_lenght);
-	log_data(shift_state, "shift_state");
+    log_array(keyb_state, "keyb_state", keyboard_lenght);
+    log_array(keyb_prev_state, "prev_state", keyboard_lenght);
+    log_data(shift_state, "shift_state");
 
-	for (i = 0; i < keyboard_lenght; i++) {
-		// if something has changed
-		if (keyb_state[i] != keyb_prev_state[i]) {		
-			if (keyb_state[i] == HIGH) {
-				int freq = (shift_state == LOW) ? frequencies[i] : frequencies[i + keyboard_lenght];
-				tone(PIN_SPEAKER, freq);
-				log_data(freq, "curr_freq", "Hz");
-			}
-			else {
-				noTone(PIN_SPEAKER);
-			}
-			
-			copy_array(keyb_state, keyb_prev_state, keyboard_lenght);
-		}
-	}
+    for (i = 0; i < keyboard_lenght; i++) {
+        // if something has changed
+        if (keyb_state[i] != keyb_prev_state[i]) {      
+            if (keyb_state[i] == HIGH) {
+                int freq = (shift_state == LOW) ? frequencies[i] : frequencies[i + keyboard_lenght];
+                tone(PIN_SPEAKER, freq);
+                log_data(freq, "curr_freq", "Hz");
+            }
+            else {
+                noTone(PIN_SPEAKER);
+            }
+            
+            copy_array(keyb_state, keyb_prev_state, keyboard_lenght);
+        }
+    }
 
-	Serial.println("-----------------------------");
-	delay(SLEEP_TIME);
+    Serial.println("-----------------------------");
+    delay(SLEEP_TIME);
 }
 
 void log_array(int arr[], char* title, int size)
 {
-	Serial.print(title);
-	Serial.print(":\t[");
-	
-	for (i = 0; i < size; i++) {
-		Serial.print(arr[i]);
+    Serial.print(title);
+    Serial.print(":\t[");
+    
+    for (i = 0; i < size; i++) {
+        Serial.print(arr[i]);
 
-		if (i < size -1) {
-			Serial.print(", ");
-		}
-	}
+        if (i < size -1) {
+            Serial.print(", ");
+        }
+    }
 
-	Serial.println("]");
+    Serial.println("]");
 }
 
 void log_data(int value, char* title)
 {
-	log_data(value, title, "");
+    log_data(value, title, "");
 }
 
 void log_data(int value, char* title, char* unit)
 {
-	Serial.print(title);
-	Serial.print(":\t");
-	Serial.print(value);
-	Serial.println(unit);
+    Serial.print(title);
+    Serial.print(":\t");
+    Serial.print(value);
+    Serial.println(unit);
 }
 
 void copy_array(int* input, int* output, int size)
 {
-	for (i = 0; i < size; i++) {
-			output[i] = input[i];
-	}
+    for (i = 0; i < size; i++) {
+        output[i] = input[i];
+    }
 }

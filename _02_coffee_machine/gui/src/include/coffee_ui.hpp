@@ -15,18 +15,14 @@
 
 class CoffeeUi : public QWidget
 {
-Q_OBJECT
+    Q_OBJECT
+
 public:
-	CoffeeUi(QWidget *parent = 0);
+	CoffeeUi();
 	~CoffeeUi();
 
-private slots:
-	void drinkClicked(QString);
-
-private:
-	QSignalMapper *sigMapper;
-	QLabel *logView;
-
+public slots:
+    coffeeButtonClicked();
 };
 
 #endif
