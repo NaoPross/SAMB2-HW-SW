@@ -91,11 +91,12 @@ void loop() {
         case BUY_COFFEE:
             if (credit >= COFFEE_PRICE) {
                 blink(LED_SET_BLUE, 4, 250);
-                credit -= COFEE_PRICE;
+                credit -= COFFEE_PRICE;
             }
             else {
                 blink(LED_SET_RED, 4, 250);
             }
+            break;
         }
 
         if (credit >= COFFEE_PRICE) {
