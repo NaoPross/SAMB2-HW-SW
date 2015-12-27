@@ -52,9 +52,9 @@ int credit, prev_status;
 void blink(int, int, int);
 
 void setup() {
-#ifdef DEBUG
+    #ifdef DEBUG
     Serial.begin(9600);
-#endif
+    #endif
 
     DDRC = 0x0E;                // Set INPUT and OUTPUT Pins
     blink(LED_SET_RED, 1, 5);
@@ -66,33 +66,40 @@ void loop() {
     // Ignore the output ports value
     int input_status = PINC & 0xF1;
 
-#ifdef DEBUG
+    #ifdef DEBUG
     Serial.print("PinC: ");
     Serial.println(input_status, BIN);
     Serial.print("Credit: ");
     Serial.println(credit);
-#endif
+    #endif
 
     // if something has changed
     if (input_status != prev_status) {
-        if (input_status & BUY_COFFEE == BUY_COFFEE) {
+        switch (input_status) {
+        case CTS10:
+            credit += 10;
+            break;
+        case CTS20:
+            credit += 20;
+            break;
+        case CTS50:
+            credit += 50;
+            break;
+        case CHF1:
+            credit += 100;
+            break;
+        case BUY_COFFEE:
             if (credit >= COFFEE_PRICE) {
                 blink(LED_SET_BLUE, 4, 250);
-                credit -= COFFEE_PRICE;
+                credit -= COFEE_PRICE;
             }
             else {
                 blink(LED_SET_RED, 4, 250);
             }
         }
-        else {
-            credit += (input_status & CTS10 == CTS10) ? 10 : 0;
-            credit += (input_status & CTS20 == CTS20) ? 20 : 0;
-            credit += (input_status & CTS50 == CTS50) ? 50 : 0;
-            credit += (input_status & CHF1 == CHF1) ? 100 : 0;
-        }
-        
+
         if (credit >= COFFEE_PRICE) {
-            blink(LED_SET_GREEN, 1, 5); 
+            blink(LED_SET_GREEN, 1, 5);
         }
         else {
             blink(LED_SET_RED, 1, 5);
