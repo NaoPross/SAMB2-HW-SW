@@ -35,7 +35,6 @@ Tabella della porta C:
 |  6  |  31 | 50 cts       | INPUT  |
 |  5  |  32 | 20 cts       | INPUT  |
 |  4  |  33 | 10 cts       | INPUT  |
-|----:|----:|:-------------|:-------|
 |  3  |  34 | LED Red      | OUTPUT |
 |  2  |  35 | LED Blue     | OUTPUT |
 |  1  |  36 | LED Green    | OUTPUT |
