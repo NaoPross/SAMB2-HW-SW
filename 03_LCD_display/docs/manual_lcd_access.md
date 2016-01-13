@@ -49,13 +49,13 @@ si deve controllare il clock `E` nel seguente modo.
  *       ~270 kHz mentre l'arduino a 16 MHz.
  */
 
-#define D_TIME    3
+#define D_TIME    4
 #define P_ENABLE 26
 #define P_RS     27
 #define P_RW     28
 
 void setup() {
-    // Interruzione del clock
+    // Blocco del clock
     digitalWrite(P_ENABLE, HIGH);
     delay(D_TIME); 
     
@@ -66,7 +66,7 @@ void setup() {
     digitalWrite(P_RW, LOW);
     delay(D_TIME);
 
-    // Esecuzione del comando
+    // Esecuzione del comando, Sblocco del clock
     digitalWrite(P_ENABLE, LOW);
     delay(D_TIME);
 }
@@ -92,9 +92,11 @@ Quindi in ordine si devono eseguire le seguenti operazioni:
     - La direzione in cui il testo viene scritto
     - Se il testo deve shiftare
 
-questo si riscrive in C nel modo seguente:
+Questo si riscrive in C++ nel modo seguente:
 
 ```C++
+#define D_TIME    4
+
 #define P_ENABLE 26
 #define P_RS     27
 #define P_RW     28
@@ -126,3 +128,18 @@ void setup() {
 }
 ```
 
+### Scrivere
+Il testo  che si desidera scrivere sul display LCD viene allocato nella CGRAM,
+controllata dal driver che converte automaticamente la codifica ASCII in una serie
+di pixels sul display.
+
+Il valore può essere scritto o letto dal bus, perciò si controlla il pin `RW` che
+abilita la modalità lettura (read) se a `HIGH` o 1, e la modalità scrittura (write)
+se a `LOW` o 0.
+
+Inoltre il pin `RS` deve essere attivato (`HIGH`) per segnalare che tutti gli 8 bit sul
+bus sono 
+
+```C++
+...d
+```
