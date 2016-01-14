@@ -134,12 +134,15 @@ controllata dal driver che converte automaticamente la codifica ASCII in una ser
 di pixels sul display.
 
 Il valore può essere scritto o letto dal bus, perciò si controlla il pin `RW` che
-abilita la modalità lettura (read) se a `HIGH` o 1, e la modalità scrittura (write)
-se a `LOW` o 0.
+abilita la modalità lettura (read) se a `HIGH` o `1`, e la modalità scrittura (write)
+se a `LOW` o `0`.
 
 Inoltre il pin `RS` deve essere attivato (`HIGH`) per segnalare che tutti gli 8 bit sul
 bus sono 
 
 ```C++
-...d
+int write(String text) {
+    for (int i = 0; i < text.length(); i++) {
+        char c = text.charAt(i);
+}
 ```
