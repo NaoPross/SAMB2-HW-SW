@@ -140,7 +140,7 @@ Inoltre il pin `RS` deve essere attivato (`HIGH`) per segnalare che tutti gli 8 
 bus sono dati.
 
 ```C++
-int write(String text) {
+void write(String text) {
     for (int i = 0; i < text.length(); i++) {
         char c = text.charAt(i);
         
