@@ -70,7 +70,6 @@ void setup() {
     digitalWrite(P_ENABLE, LOW);
     delay(D_TIME);
 }
-
 ```
 
 ### Inizializzazione
@@ -138,11 +137,23 @@ abilita la modalità lettura (read) se a `HIGH` o `1`, e la modalità scrittura 
 se a `LOW` o `0`.
 
 Inoltre il pin `RS` deve essere attivato (`HIGH`) per segnalare che tutti gli 8 bit sul
-bus sono 
+bus sono dati.
 
 ```C++
 int write(String text) {
     for (int i = 0; i < text.length(); i++) {
         char c = text.charAt(i);
+        
+        digitalWrite(P_RS, HIGH);
+        digitalWrite(P_RW, LOW);
+        PORTC = c;
+        delay(D_TIME);
+
+        digitalWrite(P_ENABLE);
+        delay(D_TIME);
+    }
 }
 ```
+
+Questa funzione è una ricostruzione di quello che suppongo sia la funzione data
+dalla libreria lcd di arduino.
