@@ -4,6 +4,10 @@
 #define D_ROWS     2
 #define D_COLUMNS 16
 
+#define B_ENABLE 0b00100000
+#define B_RW     0b01000000
+#define B_RS     0b10000000
+
 /** LCD COMUNICATION FUNCTIONS
  *
  * These functions are written to work using the port C and A of
@@ -17,26 +21,17 @@
 
 void c_enable(bool value)
 {
-    if (value)
-        PORTC = PINC | 0b00100000;
-    else
-        PORTC = PINC & 0x11011111;
+    PORTC = (value) ? PINC | B_ENABLE : PINC & ~B_ENABLE;
 }
 
 void c_rw(bool value)
 {
-    if (value)
-        PORTC = PINC | 0b01000000;
-    else
-        PORTC = PINC & 0b10111111;
+    PORTC = (value) ? PINC | B_RW : PINC & ~B_RW;
 }
 
 void c_rs(bool value)
 {
-    if (value)
-        PORTC = PINC | 0b10000000;
-    else
-        PORTC = PINC | 0x01111111;
+    PORTC = (value) ? PINC | B_RS : PINC & ~B_RS;
 }
 
 void init_LCD()
