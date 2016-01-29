@@ -1,0 +1,85 @@
+\documentclass[a4paper]{IEEEtran}
+
+%% PACKAGES
+\usepackage[european, siunitx]{circuitikz}
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+
+%% DOCUMENT
+\begin{document}
+	%% Title and base informations
+	\author{Naoki Pross 2B}
+	\title{Photoresistor Project}
+	\markboth{SAM Bellinzona}{}
+	\maketitle
+	
+	\begin{abstract}
+		Il progetto consiste nel visualizzare i dati letti dal fotoresistore con
+		un Arduino megaADK (ATmega2560), evitando nel limite del possibile di
+		utilizzare le funzioni introdotte da \texttt{Arduino.h}.
+	\end{abstract}
+	
+	\section{Elettronica}
+	Il metodo scelto per visualizzare i dati e` attraverso un display LCD, percio`
+	ho avuto la necessita` di effettuare delle ricerche su come controllare un display
+	LCD standard. (vedi \texttt{NaoPross/samb2\_hw\_and\_sw/03\_LCD\_display} su GitHub).
+	Quindi sono necessarie due porte e un pin analogico. Per il montaggio sono stati 
+	scelti i seguenti pin/porte.
+	
+	\begin{table}[h]
+		\caption{Pin e porte scelte per il montaggio}
+		\centering \begin{tabular}{ l l }
+			\hline \\
+			\texttt{PORT A} & Ouput Data Bus connected to the LCD \\
+			\texttt{PORT C} & \texttt{RS / RW / E} Control pins for the LCD\\
+			\texttt{PIN A0} & Analog Pin to read the voltage on the photoresistor \\
+			\\ \hline
+		\end{tabular}
+	\end{table}
+	
+	Lo schema elettrico del circuito si riduce ad una cosa molto semplice,
+	un potenziometro in serie ad una fotoresistenza, per poter regolare la sensibilita`
+	della misurazione.
+	
+	\begin{figure}[h]
+		\centering
+		\begin{circuitikz}
+			% display
+			\node[draw,minimum width=4.25cm,minimum height=1.5cm,anchor=south west](lcd) {\texttt{LCD Display}};
+			% display CON port & data bus
+			\foreach \i in {1,2, ..., 16}
+			{
+				\draw (.25 * \i, 0) -- (.25 * \i, -1);
+			}
+			% Arduino
+			\draw
+				(0, -1) node[draw,minimum width=5cm,minimum height=2cm,anchor=north west](atmega) {\texttt{ATmega2560}}
+				(.05, -1.25)		node[scale=.4,anchor=west] {\texttt{+5V GND}}
+				(1.25, -1.25)	node[scale=.5,anchor=west] {\texttt{PORTA}}
+				(2.5, -1.25)		node[scale=.4,anchor=west] {\texttt{PC0 PC1 PC2}}
+				(3.5, -1.25)		node[scale=.4,anchor=west] {\texttt{+5V GND}}
+				(4.5, -1.25)		node[scale=.4,anchor=west] {\texttt{+5V}}
+				(4.5, -2.75)		node[scale=.4,anchor=west] {\texttt{GND}};
+			% USB to PC
+			\foreach \i in {1,2, ..., 4}
+			{
+				\draw (.25 * \i, -3) -- (.25 * \i, -4);
+			}
+			\draw
+				(.6, -4.25)		node[anchor=north] {\texttt{USB Cable}};
+			% Photoresistor
+			\draw
+				(4.7, -1)		to[short]						(4.7, 1)
+						 		to[short]						(6, 1)
+								to[variable resistor] 		(6, -1)
+								to[short]						(6, -2)
+								to[photoresistor]			(6, -4)
+								to[short]						(4.7, -4)
+								to[short]						(4.7, -3);
+			\draw
+				(6, -2)	to[short]		(5, -2)
+				(4.5, -2) node[scale=.4,anchor=west] {\texttt{A0}};
+		\end{circuitikz}
+	\end{figure}
+	
+\end{document}
