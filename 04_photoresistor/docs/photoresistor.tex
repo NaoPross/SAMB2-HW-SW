@@ -1,9 +1,10 @@
-\documentclass[a4paper]{IEEEtran}
+\documentclass[a4paper]{proc}
 
 %% PACKAGES
 \usepackage[european, siunitx]{circuitikz}
 \usepackage[utf8]{inputenc}
 \usepackage{hyperref}
+\usepackage{float}
 
 %% DOCUMENT
 \begin{document}
@@ -16,7 +17,9 @@
 	\begin{abstract}
 		Il progetto consiste nel visualizzare i dati letti dal fotoresistore con
 		un Arduino megaADK (ATmega2560), evitando nel limite del possibile di
-		utilizzare le funzioni introdotte da \texttt{Arduino.h}.
+		utilizzare le funzioni introdotte da \texttt{Arduino.h}.\\\\
+		Questo progetto e` un estensione di un altra ricerca fatta nel tempo
+		libero personale sul funzionamento di un display LCD standard.
 	\end{abstract}
 	
 	\section{Elettronica}
@@ -32,7 +35,7 @@
 			\hline \\
 			\texttt{PORT A} & Ouput Data Bus connected to the LCD \\
 			\texttt{PORT C} & \texttt{RS / RW / E} Control pins for the LCD\\
-			\texttt{PIN A0} & Analog Pin to read the voltage on the photoresistor \\
+			\texttt{PIN A0} & Analog Pin to read the voltage\\
 			\\ \hline
 		\end{tabular}
 	\end{table}
@@ -41,7 +44,7 @@
 	un potenziometro in serie ad una fotoresistenza, per poter regolare la sensibilita`
 	della misurazione.
 	
-	\begin{figure}[h]
+	\begin{figure}[H]
 		\centering
 		\begin{circuitikz}
 			% display
@@ -69,17 +72,35 @@
 				(.6, -4.25)		node[anchor=north] {\texttt{USB Cable}};
 			% Photoresistor
 			\draw
-				(4.7, -1)		to[short]						(4.7, 1)
+				(4.7, -1)	to[short]						(4.7, 1)
 						 		to[short]						(6, 1)
-								to[variable resistor] 		(6, -1)
+								to[variable resistor=$R_{var}$] 		(6, -1)
 								to[short]						(6, -2)
-								to[photoresistor]			(6, -4)
+								to[photoresistor=$R$]			(6, -4)
 								to[short]						(4.7, -4)
 								to[short]						(4.7, -3);
 			\draw
-				(6, -2)	to[short]		(5, -2)
+				(6, -2)	to[short, o-]		(5, -2)
 				(4.5, -2) node[scale=.4,anchor=west] {\texttt{A0}};
 		\end{circuitikz}
+		\caption{Schema elettrico del montaggio}
 	\end{figure}
 	
+	\section{Software}
+	Il codice si riduce ad una base molto semplice, quindi dei cicli infiniti
+	di lettura, codifica del numero letto in ASCII e visualizzazione del testo
+	sull'LCD.
+	Tutto il codice sorgente si trova al repo
+	\texttt{samb\_hw\_and\_sw/07\_photoresistor} su Github.
+	
+	%Tutta la libreria di comunicazione e` stata scritta nel progetto precedente quindi
+	%l'unico problema riscontrato era che il valore letto dal sensore veniva invertito.
+	%Quindi se la luminosita` incrementava, il valore letto scendeva. Questo perche`
+	%la lettura veniva eseguita sulla tensione del carico $R$ che era un fotoresistore.
+	%I fotoresistori hanno la caratteristica di aumentare la resistenza proporzionalmente
+	%rispetto alla intensita` di luce a cui sono esposti, quindi incrementando la luminosita`
+	%con la legge i Ohm la tensione scendeva.
+	
+	%$$I = const.$$
+	%$$U = R * I$$
 \end{document}
