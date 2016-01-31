@@ -18,13 +18,13 @@
 		Il progetto consiste nel visualizzare i dati letti dal fotoresistore con
 		un Arduino megaADK (ATmega2560), evitando nel limite del possibile di
 		utilizzare le funzioni introdotte da \texttt{Arduino.h}.\\\\
-		Questo progetto e` un estensione di un altra ricerca fatta nel tempo
+		Questo progetto \`e un estensione di un altra ricerca fatta nel tempo
 		libero personale sul funzionamento di un display LCD standard.
 	\end{abstract}
 	
 	\section{Elettronica}
-	Il metodo scelto per visualizzare i dati e` attraverso un display LCD, percio`
-	ho avuto la necessita` di effettuare delle ricerche su come controllare un display
+	Il metodo scelto per visualizzare i dati \`e attraverso un display LCD, perci\`o
+	ho avuto la necessit\`a di effettuare delle ricerche su come controllare un display
 	LCD standard. (vedi \texttt{NaoPross/samb2\_hw\_and\_sw/03\_LCD\_display} su GitHub).
 	Quindi sono necessarie due porte e un pin analogico. Per il montaggio sono stati 
 	scelti i seguenti pin/porte.
@@ -41,7 +41,7 @@
 	\end{table}
 	
 	Lo schema elettrico del circuito si riduce ad una cosa molto semplice,
-	un potenziometro in serie ad una fotoresistenza, per poter regolare la sensibilita`
+	un potenziometro in serie ad una fotoresistenza, per poter regolare la sensibilit\`a
 	della misurazione.
 	
 	\begin{figure}[H]
@@ -93,12 +93,12 @@
 	Tutto il codice sorgente si trova al repo
 	\texttt{samb\_hw\_and\_sw/07\_photoresistor} su Github.
 	
-	%Tutta la libreria di comunicazione e` stata scritta nel progetto precedente quindi
+	%Tutta la libreria di comunicazione \`e stata scritta nel progetto precedente quindi
 	%l'unico problema riscontrato era che il valore letto dal sensore veniva invertito.
-	%Quindi se la luminosita` incrementava, il valore letto scendeva. Questo perche`
+	%Quindi se la luminosit\`a incrementava, il valore letto scendeva. Questo perch\`e
 	%la lettura veniva eseguita sulla tensione del carico $R$ che era un fotoresistore.
 	%I fotoresistori hanno la caratteristica di aumentare la resistenza proporzionalmente
-	%rispetto alla intensita` di luce a cui sono esposti, quindi incrementando la luminosita`
+	%rispetto alla intensit\`a di luce a cui sono esposti, quindi incrementando la luminosit\`a
 	%con la legge i Ohm la tensione scendeva.
 	
 	%$$I = const.$$
