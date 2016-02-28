@@ -17,7 +17,7 @@ const double PULSE_DELTA = (C_PULSE_MAX - C_PULSE_MIN) / 1000;
 
 /* Function Arguments
  * 		angle is given in degrees between 0 and 180 
- * 		keepTime is how long the servo should keep the angle, in seconds
+ * 		keepTime is for how long the servo should keep the angle, in seconds
  */
 int rcServoAngle(int angle, double keepTime)
 {
@@ -26,13 +26,16 @@ int rcServoAngle(int angle, double keepTime)
 		return -1;
 	}
 
-	/* the following calculation translates to:
-	 * minimum time + calculated angle time
-	 */
+	bool skip = false;
+		
+	if (keepTime >= 0) {
+		skip = true;
+	}
+
 	double pulse = PULSE_MIN + angle/180.0 * PULSE_DELTA;
 	unsigned long runtime_start = millis();
 
-	while (millis() - runtime_start < keepTime * 1000) {
+	while (!skip && millis() - runtime_start < keepTime * 1000) {
 		unsigned long start_time = micros();
 
 		digitalWrite(PIN_PWM, HIGH);
@@ -41,6 +44,7 @@ int rcServoAngle(int angle, double keepTime)
 		digitalWrite(PIN_PWM, LOW);
 		while (micros() - start_time <= PERIOD * 1000000);
 
+		// disabled for better performance and precision
 		// Serial.print("RAN w/ start_time=");
 		// Serial.print(start_time);
 		// Serial.print(" pulse=");
@@ -57,7 +61,8 @@ void setup()
 {
 	Serial.begin(9600);
 	pinMode(PIN_PWM, OUTPUT);
-	rcServoAngle(0, 0.5);
+	// set a starting position
+	rcServoAngle(0, 0);
 }
 
 void loop()
