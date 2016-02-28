@@ -14,7 +14,7 @@ const double STEP = KNOWN_V/1024;
 void setup()
 {
 	Serial.begin(9600);
-    pinMode(P_VOLTMETER, INPUT);
+	pinMode(P_VOLTMETER, INPUT);
 }
 
 void loop()
