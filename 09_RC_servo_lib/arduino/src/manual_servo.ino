@@ -26,16 +26,14 @@ int rcServoAngle(int angle, double keepTime)
         return -1;
     }
 
-    bool skip = false;
-        
     if (keepTime >= 0) {
-        skip = true;
+        return -1;
     }
 
     double pulse = PULSE_MIN + angle/180.0 * PULSE_DELTA;
     unsigned long runtime_start = millis();
 
-    while (!skip && millis() - runtime_start < keepTime * 1000) {
+    while (millis() - runtime_start < keepTime * 1000) {
         unsigned long start_time = micros();
 
         digitalWrite(PIN_PWM, HIGH);
@@ -62,7 +60,7 @@ void setup()
     Serial.begin(9600);
     pinMode(PIN_PWM, OUTPUT);
     // set a starting position
-    rcServoAngle(0, 0);
+    rcServoAngle(0, 0.2);
 }
 
 void loop()

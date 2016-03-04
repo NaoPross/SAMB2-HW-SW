@@ -29,6 +29,7 @@
 
 # Arduino Compiler
 **/.build_ano
+**/.holder
 
 # Tex Files
 **/*.aux
