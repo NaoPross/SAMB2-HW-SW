@@ -80,5 +80,5 @@ void loop()
         angle_gamma = 180 - angle_gamma;
     }
 
-    rcServoAngle(angle_gamma, 1)
+    rcServoAngle(angle_gamma, 1);
 }
