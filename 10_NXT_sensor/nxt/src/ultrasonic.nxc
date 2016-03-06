@@ -1,0 +1,14 @@
+#define D_TIME 500
+    
+task main()
+{
+    SetSensorLowspeed(IN_4);
+
+    while (true) {
+        ClearScreen();
+        TextOut(0, LCD_LINE1, "Value:");
+        TextOut(0, LCD_LINE2, NumToStr(SensorUS(IN_4)));
+
+        Wait(D_TIME);
+    }
+}
