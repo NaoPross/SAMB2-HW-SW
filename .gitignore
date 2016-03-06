@@ -34,4 +34,7 @@
 # Tex Files
 **/*.aux
 **/*.log
+
+# Downloaded files
+**/downloads
 **/*.gz
