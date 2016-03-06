@@ -72,7 +72,13 @@ void loop()
     int val_left = analogRead(P_PHOTORES_LEFT);
 
     int diff = var_right - val_left;
-    double angle = acos(diff/1024.0);
+    double angle_alpha = acos(diff/1024.0);
 
-    rcServoAngle(angle, 1)
+    // Correct the angle if requiered
+    double angle_gamma = angle_alpha;
+    if (diff < 0) {
+        angle_gamma = 180 - angle_gamma;
+    }
+
+    rcServoAngle(angle_gamma, 1)
 }
