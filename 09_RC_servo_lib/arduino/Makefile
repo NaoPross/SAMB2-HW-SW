@@ -1,7 +1,7 @@
 CC=arduino
-BOARD=arduino:avr:nano:cpu=atmega328
+BOARD=arduino:avr:mega
 
-SOURCE=src/ultrasonic/ultrasonic.ino
+SOURCE=src/manual_servo/manual_servo.ino
 
 build:
 	$(CC) --verify --board $(BOARD) -v $(SOURCE)

@@ -1,12 +1,13 @@
 #include <Arduino.h>
 
-#define PIN_PWM 7
+#define PIN_PWM 9
 #define PIN_SENSOR A0
 
 // human readable config, in milliseconds
 #define C_PERIOD 20.0
 #define C_PULSE_MAX 2.5     // 180 deg
 #define C_PULSE_MIN 0.5     //   0 deg
+#define ANGLE_MAX   180.0
 
 // Corret the times
 const double PERIOD = C_PERIOD / 1000;
@@ -22,7 +23,7 @@ const double PULSE_DELTA = (C_PULSE_MAX - C_PULSE_MIN) / 1000;
 int rcServoAngle(int angle, double keepTime)
 {
     // Check if the arg is valid
-    if (angle < 0 || angle > 180) {
+    if (angle < 0 || angle > ANGLE_MAX) {
         return -1;
     }
 
@@ -30,7 +31,7 @@ int rcServoAngle(int angle, double keepTime)
         return -1;
     }
 
-    double pulse = PULSE_MIN + angle/180.0 * PULSE_DELTA;
+    double pulse = PULSE_MIN + angle/ANGLE_MAX * PULSE_DELTA;
     unsigned long runtime_start = millis();
 
     while (millis() - runtime_start < keepTime * 1000) {
@@ -60,13 +61,16 @@ void setup()
     Serial.begin(9600);
     pinMode(PIN_PWM, OUTPUT);
     // set a starting position
-    rcServoAngle(0, 0.2);
+    rcServoAngle(45, 0.2);
 }
 
 void loop()
 {
     int sensor_raw = analogRead(PIN_SENSOR);
-    double sensor_deg = sensor_raw/1024.0*180;
+    double sensor_deg = sensor_raw/1024.0*ANGLE_MAX;
+
+    // Serial.println(sensor_raw);
+    // Serial.println(sensor_deg);
 
     rcServoAngle(sensor_deg, 0.2);
 }
