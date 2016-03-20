@@ -2,7 +2,7 @@
 
 // Pins
 #define P_LED 13
-#define P_INRT 12
+#define P_INTR 12
 #define P_INTR_LED 11
 
 // For how many times should the intr led blink
