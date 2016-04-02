@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root xmlns:nsd="http://structorizer.fisch.lu/" version="3.24-05" text="&#34;EXAM_PREP_1 [NUMBERS]&#34;" comment="&#34;&#34;" color="ffffff" type="program" style="nice">
+	<children>
+		<instruction text="&#34;START := 0x01&#34;,&#34;S0 := 0x02&#34;,&#34;S1 := 0x04&#34;,&#34;&#34;,&#34;LEDS := 0x0F&#34;,&#34;D_TIME := 500&#34;" comment="&#34;&#34;" color="ffffff" rotated="0"></instruction>
+		<instruction text="&#34;DDRA := DDRA and not(START or S0 or S1)&#34;,&#34;DDRC := DDRC or LEDS&#34;" comment="&#34;&#34;" color="ffffff" rotated="0"></instruction>
+		<forever text="" comment="&#34;&#34;" color="ffffff">
+			<qForever>
+				<while text="&#34;while not(PINA and START)&#34;" comment="&#34;&#34;" color="ffffff">
+					<qWhile>
+						<instruction text="&#34;nop&#34;" comment="&#34;&#34;" color="ffffff" rotated="0"></instruction>
+					</qWhile>
+				</while>
+				<while text="&#34;while PINA and START&#34;" comment="&#34;&#34;" color="ffffff">
+					<qWhile>
+						<instruction text="&#34;nop&#34;" comment="&#34;&#34;" color="ffffff" rotated="0"></instruction>
+					</qWhile>
+				</while>
+				<instruction text="&#34;wait D_TIME&#34;" comment="&#34;&#34;" color="ffffff" rotated="0"></instruction>
+				<while text="&#34;while not(PINA and START)&#34;" comment="&#34;&#34;" color="ffffff">
+					<qWhile>
+						<instruction text="&#34;nop&#34;" comment="&#34;&#34;" color="ffffff" rotated="0"></instruction>
+					</qWhile>
+				</while>
+				<while text="&#34;while PINA and START&#34;" comment="" color="ffffff">
+					<qWhile>
+						<instruction text="&#34;_S0 := PINA and S0&#34;,&#34;_S1 := PINA and S1&#34;" comment="&#34;&#34;" color="ffffff" rotated="0"></instruction>
+						<alternative text="&#34;not _S0 and not _S1&#34;" comment="&#34;&#34;" color="ffffff">
+							<qTrue>
+								<instruction text="&#34;PORTC := 0x01&#34;" comment="&#34;&#34;" color="ffffff" rotated="0"></instruction>
+							</qTrue>
+							<qFalse>
+								<alternative text="&#34;not _S0 and _S1&#34;" comment="&#34;&#34;" color="ffffff">
+									<qTrue>
+										<instruction text="&#34;PORTC := 0x03&#34;" comment="&#34;&#34;" color="ffffff" rotated="0"></instruction>
+									</qTrue>
+									<qFalse>
+										<alternative text="&#34;_S0 and not _S1&#34;" comment="&#34;&#34;" color="ffffff">
+											<qTrue>
+												<instruction text="&#34;PORTC := 0x07&#34;" comment="&#34;&#34;" color="ffffff" rotated="0"></instruction>
+											</qTrue>
+											<qFalse>
+												<alternative text="&#34;_S0 and _S1&#34;" comment="&#34;&#34;" color="ffffff">
+													<qTrue>
+														<instruction text="&#34;PORTC := 0x0F&#34;" comment="&#34;&#34;" color="ffffff" rotated="0"></instruction>
+													</qTrue>
+													<qFalse>
+														<instruction text="&#34;nop&#34;" comment="&#34;&#34;" color="ffffff" rotated="0"></instruction>
+													</qFalse>
+												</alternative>
+											</qFalse>
+										</alternative>
+									</qFalse>
+								</alternative>
+							</qFalse>
+						</alternative>
+					</qWhile>
+				</while>
+				<instruction text="&#34;PORTC := 0x00&#34;" comment="&#34;&#34;" color="ffffff" rotated="0"></instruction>
+			</qForever>
+		</forever>
+	</children>
+</root>
