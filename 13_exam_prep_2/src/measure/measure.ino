@@ -8,7 +8,6 @@
     `$ arduino --verify --board arduino:avr:megaADK`
  */
 
-#include <Arduino.h>
 #include <avr/delay.h>
 
 /* OUTPUT PORT CONFIGURATION */
@@ -22,7 +21,7 @@
 #define TRIGGER 0x20
 
 /* INPUT PORT CONFIGURATION */
-#define PORT_IN_DDR DDRA    // Same as above
+#define PORT_IN_DDR DDRA    // Same as above  GAYYYYYYY Z E Y SONO SWAPPATI 
 #define PORT_IN_PIN PINA
 #define PORT_IN_OUT PORTA
 
@@ -48,7 +47,7 @@ void loop() {
     // Wait until STAB goes UP
     while (!(PORT_IN_PIN & STAB));
     
-    for (uint8_t i = 0; i < 0xF ; i++) {
+    for (uint8_t i = 1; i <= 0xF ; i++) {
         PORT_OUT_REG |= i & DISPLAY; // show i
         _delay_ms(500);
         PORT_OUT_REG &= ~DISPLAY;    // turn off
