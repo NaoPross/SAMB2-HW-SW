@@ -14,22 +14,21 @@
  * TL_AY : Bit for YELLOW on TR_A
  * TL_AG : Bit fot GREEN on TR_A
  */
-#define TL_A 0x28
 #define TL_AR 5
 #define TL_AY 4
 #define TL_AG 3
+#define TL_A (1<<TL_AR | 1<<TL_AY|  1<<TL_AG)
 
-#define TL_B 0x07
 #define TL_BR 2
 #define TL_BY 1
 #define TL_BG 0
+#define TL_B (1<<TL_BR | 1<<TL_BY|  1<<TL_BG)
 
 // On PORT A
 #define TL_ON 0 
 
 void setup() {
-    Serial.begin(9600);
-    DDRC |= 0xFF; //TL_A | TL_B;
+    DDRC |= TL_A | TL_B;
     DDRC &= ~(1<<TL_ON);
 }
 
@@ -45,6 +44,8 @@ void loop() {
     PORTC &= 0;   
     // `t` counts how many seconds have passed
     for (uint16_t t = 0; t <= T4; t++) {
+    
+        // PORTC |= (t < T2) ? 1<<TL_AR : 1;
         // Traffic Light A RED (TL_AR)
         if (t < T2) {
             PORTC |= 1<<TL_AR;
@@ -76,11 +77,8 @@ void loop() {
         }
         
         // Wait for 1 Second
-        _delay_ms(100);
+        _delay_ms(1000);
         // Reset, everything will be turned back on with the next iteration
         PORTC &= 0;
-        
-        Serial.println("Looping");
-        Serial.println(t);
     }
 }

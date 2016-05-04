@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root xmlns:nsd="http://structorizer.fisch.lu/" version="3.24-06" text="&#34;MIXER&#34;" comment="&#34;&#34;" color="ffffff" type="program" style="nice">
+	<children>
+		<instruction text="&#34;# BIT DEFINITION FOR PORTC &#34;,&#34;START := 0&#34;,&#34;S1 := 1&#34;,&#34;S2 := 2&#34;,&#34;S3 := 3&#34;,&#34;E1 := 4&#34;,&#34;E2 := 5&#34;,&#34;E3 := 6&#34;,&#34;M := 7&#34;,&#34;&#34;,&#34;E1_TIMEOUT := 2 seconds&#34;" comment="&#34;&#34;" color="ffffff" rotated="0"></instruction>
+		<instruction text="&#34;set START, S1, S2, S3 as input&#34;" comment="&#34;&#34;" color="ffffff" rotated="0"></instruction>
+		<instruction text="&#34;set E1, E2, E3, M as output&#34;" comment="&#34;&#34;" color="ffffff" rotated="0"></instruction>
+		<while text="&#34;Forever&#34;" comment="&#34;&#34;" color="ffffff">
+			<qWhile>
+				<while text="&#34;START is 0&#34;" comment="&#34;&#34;" color="ffffff">
+					<qWhile>
+						<instruction text="&#34;nop&#34;" comment="&#34;&#34;" color="ffffff" rotated="0"></instruction>
+					</qWhile>
+				</while>
+				<instruction text="&#34;turn off E3&#34;" comment="&#34;&#34;" color="ffffff" rotated="0"></instruction>
+				<instruction text="&#34;E1_TIME := current time&#34;" comment="&#34;&#34;" color="ffffff" rotated="0"></instruction>
+				<while text="&#34;current time - E1_TIME &#60;= E1_TIMEOUT&#34;" comment="&#34;&#34;" color="ffffff">
+					<qWhile>
+						<alternative text="&#34;S2 is 0&#34;" comment="&#34;&#34;" color="ffffff">
+							<qTrue>
+								<alternative text="&#34;S3 is 1&#34;" comment="&#34;&#34;" color="ffffff">
+									<qTrue>
+										<instruction text="&#34;turn off E2&#34;" comment="&#34;&#34;" color="ffffff" rotated="0"></instruction>
+									</qTrue>
+									<qFalse>
+										<instruction text="&#34;turn on M&#34;" comment="&#34;&#34;" color="ffffff" rotated="0"></instruction>
+									</qFalse>
+								</alternative>
+							</qTrue>
+							<qFalse>
+								<instruction text="&#34;turn on E1&#34;" comment="&#34;&#34;" color="ffffff" rotated="0"></instruction>
+							</qFalse>
+						</alternative>
+					</qWhile>
+				</while>
+				<instruction text="&#34;turn off E1&#34;" comment="&#34;&#34;" color="ffffff" rotated="0"></instruction>
+				<instruction text="&#34;turn on E3&#34;" comment="&#34;&#34;" color="ffffff" rotated="0"></instruction>
+				<while text="&#34;S1 is 0&#34;" comment="&#34;&#34;" color="ffffff">
+					<qWhile>
+						<instruction text="&#34;nop&#34;" comment="&#34;&#34;" color="ffffff" rotated="0"></instruction>
+					</qWhile>
+				</while>
+			</qWhile>
+		</while>
+	</children>
+</root>
