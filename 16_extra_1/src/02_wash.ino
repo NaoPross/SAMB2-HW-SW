@@ -6,16 +6,16 @@
 
 // on PORT D
 #define MASKWATER 0x01;
-#define MASK_WDIR 0x02;
+#define MASKW_DIR 0x02;
 #define MASKHEAT  0x04;
-#define MASKPOWER 0x08;
+#define MASKPOWDER 0x08;
 
 
 void setup() {
     // output
     DDRB &= ~(MASKSTART | MASKFILL | MASKTEMP | MASKDONE);
     // input
-    DDRD |= (MASKWATER | MASKW_DIR | MASKHEAT | MASKPOWER);
+    DDRD |= (MASKWATER | MASKW_DIR | MASKHEAT | MASKPOWDER);
 }
 
 void loop() {

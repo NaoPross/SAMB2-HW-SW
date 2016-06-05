@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root xmlns:nsd="http://structorizer.fisch.lu/" version="3.24-06" text="&#34;01_TANK_SHIFT&#34;" comment="&#34;&#34;" color="ffffff" type="program" style="nice">
+	<children>
+		<instruction text="&#34;set bit 1 as output (LED)&#34;" comment="&#34;&#34;" color="ffffff" rotated="0"></instruction>
+		<instruction text="&#34;set bits 2, 3, 4 as input (L0, L1, L2)&#34;" comment="&#34;&#34;" color="ffffff" rotated="0"></instruction>
+		<instruction text="&#34;turn off LED&#34;" comment="&#34;&#34;" color="ffffff" rotated="0"></instruction>
+		<forever text="" comment="&#34;&#34;" color="ffffff">
+			<qForever>
+				<instruction text="&#34;read L2, L1, L0 and rshift by 2 to obtain a number SENSOR&#34;" comment="&#34;&#34;" color="ffffff" rotated="0"></instruction>
+				<alternative text="&#34;SENSOR = 0&#34;" comment="&#34;&#34;" color="ffffff">
+					<qTrue>
+						<instruction text="&#34;turn on LED&#34;" comment="&#34;&#34;" color="ffffff" rotated="0"></instruction>
+						<instruction text="&#34;wait 1s&#34;" comment="&#34;&#34;" color="ffffff" rotated="0"></instruction>
+						<instruction text="&#34;turn off LED&#34;" comment="&#34;&#34;" color="ffffff" rotated="0"></instruction>
+						<instruction text="&#34;wait 1s&#34;" comment="&#34;&#34;" color="ffffff" rotated="0"></instruction>
+					</qTrue>
+					<qFalse>
+						<alternative text="&#34;SENSOR &#62;= 6&#34;" comment="&#34;&#34;" color="ffffff">
+							<qTrue>
+								<instruction text="&#34;turn on LED&#34;" comment="&#34;&#34;" color="ffffff" rotated="0"></instruction>
+							</qTrue>
+							<qFalse>
+								<instruction text="&#34;turn off LED&#34;" comment="&#34;&#34;" color="ffffff" rotated="0"></instruction>
+							</qFalse>
+						</alternative>
+					</qFalse>
+				</alternative>
+			</qForever>
+		</forever>
+	</children>
+</root>

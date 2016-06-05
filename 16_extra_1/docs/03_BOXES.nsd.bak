@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root xmlns:nsd="http://structorizer.fisch.lu/" version="3.24-06" text="&#34;TEMPLATE&#34;" comment="" color="ffffff" type="program" style="nice">
+	<children>
+		<instruction text="&#34;I/O Definition&#34;" comment="" color="ffffff" rotated="0"></instruction>
+		<instruction text="&#34;on PORTB set bits 0, 1, 2 as output for S1, S2, S3&#34;" comment="&#34;&#34;" color="ffffff" rotated="0"></instruction>
+		<instruction text="&#34;on PORTB set bits 3, 4, 5 as input for LED_GRANDE, LED_MEDIA, LED_PICCOLA&#34;" comment="&#34;&#34;" color="ffffff" rotated="0"></instruction>
+		<instruction text="&#34;big = medium = small = 0&#34;" comment="&#34;&#34;" color="ffffff" rotated="0"></instruction>
+		<while text="&#34;Endless Loop&#34;" comment="" color="ffffff">
+			<qWhile>
+				<while text="&#34;S1 is low&#34;" comment="&#34;&#34;" color="ffffff">
+					<qWhile>
+					</qWhile>
+				</while>
+				<instruction text="&#34;turn off LED_PICCOLA, LED_MEDIA, LED_PICCOLA&#34;" comment="&#34;&#34;" color="ffffff" rotated="0"></instruction>
+				<alternative text="&#34;S3 is low&#34;" comment="&#34;&#34;" color="ffffff">
+					<qTrue>
+						<instruction text="&#34;turn on LED_GRANDE&#34;,&#34;big = big +1&#34;" comment="&#34;&#34;" color="ffffff" rotated="0"></instruction>
+					</qTrue>
+					<qFalse>
+						<alternative text="&#34;S2 is low&#34;" comment="&#34;&#34;" color="ffffff">
+							<qTrue>
+								<instruction text="&#34;turn on LED_MEDIA&#34;,&#34;medium = medium +1&#34;" comment="&#34;&#34;" color="ffffff" rotated="0"></instruction>
+							</qTrue>
+							<qFalse>
+								<alternative text="&#34;S1 is low&#34;" comment="&#34;&#34;" color="ffffff">
+									<qTrue>
+										<instruction text="&#34;turn on LED_PICCOLA &#34;,&#34;small = small +1&#34;" comment="&#34;&#34;" color="ffffff" rotated="0"></instruction>
+									</qTrue>
+									<qFalse>
+									</qFalse>
+								</alternative>
+							</qFalse>
+						</alternative>
+					</qFalse>
+				</alternative>
+			</qWhile>
+		</while>
+	</children>
+</root>

@@ -1,1 +1,1 @@
-La soluzione è `PB = PV | 0x18`
+La soluzione è `PB = PB | 0x18`

@@ -47,29 +47,58 @@ si deve controllare il clock `E` nel seguente modo.
  *       millisecondi per permettere al diplay di eseguire
  *       l'operazione poichè il clock dell'LCD funziona a
  *       ~270 kHz mentre l'arduino a 16 MHz.
+ *
+ *      1/270kHz = 3.7 us
  */
 
-#define D_TIME    4
+#define D_TIME    4 
 #define P_ENABLE 26
 #define P_RS     27
 #define P_RW     28
 
 void setup() {
+    // I/O setup ...
     // Blocco del clock
     digitalWrite(P_ENABLE, HIGH);
-    delay(D_TIME); 
+    delayMicroseconds(D_TIME); 
     
     /* Preparazione del comando inviare (dalla instruction table)
        in questo caso 'Clear Display' */
     PORTC = 0x01;
     digitalWrite(P_RS, LOW);
     digitalWrite(P_RW, LOW);
-    delay(D_TIME);
+    delayMicroseconds(D_TIME);
 
     // Esecuzione del comando, Sblocco del clock
     digitalWrite(P_ENABLE, LOW);
-    delay(D_TIME);
+    delayMicroseconds(D_TIME);
 }
+```
+
+Senza utilizzare le librerie di Arduino (quindi con AVR).
+
+```C++
+#include <avr/delay.h>
+
+#define D_TIME 4
+
+// on PORTB
+#define E  0
+#define RS 1
+#define RW 2
+
+int main() {
+    // I/O setup ...
+    // 'Clear Display'
+    PORTB |= 1<<E;              // blocco clock
+    PORTC = 0x01;               // istruzione
+    PORTB &= ~(1<<RS | 1<<RW);  // RS = dati, RW = Write
+    _delay_us(D_TIME);          // wait
+    PORTB |= 1<<E;              // esecuzione
+
+    return 0;
+}
+    
 ```
 
 ### Inizializzazione

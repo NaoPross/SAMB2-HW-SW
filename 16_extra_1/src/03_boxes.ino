@@ -1,6 +1,6 @@
 #define BITS1 0
 #define BITS2 1
-#define BITS4 2
+#define BITS3 2
 #define BITLED_GRANDE  3
 #define BITLED_MEDIA   4
 #define BITLED_PICCOLA 5
