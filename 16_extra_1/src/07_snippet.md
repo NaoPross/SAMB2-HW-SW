@@ -1,14 +1,12 @@
 **Consegna: spiega cosa fanno le istruzioni sottostanti**
 
-`if((PINB & 0x40) == 0) {`
 Controlla se il bit 6 è spento.
+```if((PINB & 0x40) == 0) {```
 
-`   PORTB = PORTB | 0x40;`
 Se è spento lo accende
+```   PORTB = PORTB | 0x40;```
+```} else {```
 
-`} else {`
-
-`   PORTB = PORTB & ~0x40;`
 spegne il bit 6.
-
-`}`
+```   PORTB = PORTB & ~0x40;```
+```}```
