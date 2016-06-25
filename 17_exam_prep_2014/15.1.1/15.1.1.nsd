@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root xmlns:nsd="http://structorizer.fisch.lu/" version="3.24-06" text="&#34;15.1.1&#34;" comment="" color="ffffff" type="program" style="nice">
+	<children>
+		<instruction text="&#34;I/O Definition&#34;" comment="" color="ffffff" rotated="0"></instruction>
+		<instruction text="&#34;declare DL6 as output&#34;" comment="&#34;&#34;" color="ffffff" rotated="0"></instruction>
+		<while text="&#34;Endless Loop&#34;" comment="" color="ffffff">
+			<qWhile>
+				<instruction text="&#34;turn on DL6&#34;" comment="" color="ffffff" rotated="0"></instruction>
+				<instruction text="&#34;wait 250ms&#34;" comment="" color="ffffff" rotated="0"></instruction>
+				<instruction text="&#34;turn off DL6&#34;" comment="" color="ffffff" rotated="0"></instruction>
+				<instruction text="&#34;wait 250ms&#34;" comment="" color="ffffff" rotated="0"></instruction>
+			</qWhile>
+		</while>
+	</children>
+</root>
